@@ -1,16 +1,47 @@
-# React + Vite
+# Print2Go Campus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web-based printing service for WMSU Campus with React and Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dashboard**: Real-time print job tracking and statistics
+- **New Print Job**: Drag-and-drop file upload with customizable settings
+- **History**: View and manage past print jobs
+- **Settings**: User preferences and account management
+- **Help & Support**: FAQs and customer support
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 18 with hooks
+- Vite for fast development
+- Tailwind CSS for modern styling
+- Lucide React for icons
+- React Router for navigation
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start development server: `npm run dev`
+4. Open browser to `http://localhost:5173`
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/         # Page components
+│   └── assets/        # Static assets
+├── public/            # Public files
+└── package.json
+```
+
+## UI Features
+
+- Responsive design for all screen sizes
+- Animated micro-interactions
+- Background SVG decorations
+- Modern glassmorphism effects
+- Collapsible sidebar navigation
+- Real-time price calculation
