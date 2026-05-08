@@ -6,8 +6,20 @@ import {
   FileText, 
   X,
   CheckCircle,
-  ChevronRight
+  ChevronRight,
+  Activity
 } from 'lucide-react';
+
+// --- BACKGROUND DECORATION COMPONENTS ---
+const Watermark = () => (
+  <div className="fixed bottom-[-50px] left-[-50px] opacity-[0.1] pointer-events-none z-0">
+    <img 
+      src="/wmsu-img.jpg" 
+      alt="WMSU Seal"
+      className="w-full h-full opacity-80"
+    />
+  </div>
+);
 
 const NewPrintJob = () => {
   const [file, setFile] = useState(null);
@@ -15,109 +27,173 @@ const NewPrintJob = () => {
   const [paperSize, setPaperSize] = useState('A4');
   const [colorMode, setColorMode] = useState('B&W');
 
-  // Simple Price Calculator based on your paper data
   const basePrice = colorMode === 'B&W' ? 2 : 5;
   const totalPrice = basePrice * copies;
 
   return (
     <div className="flex h-screen bg-slate-100 font-sans text-slate-800">
+      <Watermark />
+
       {/* SIDEBAR */}
       <Sidebar />
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden relative">
         <Topbar />
 
         <div className="flex-1 overflow-y-auto p-8 flex justify-center">
-          <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* GRID CONTAINER: Added items-stretch for equal height */}
+          <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 items-stretch pb-8">
             
-            {/* LEFT: UPLOAD ZONE */}
-            <div className="space-y-6">
-              <div className="bg-white rounded-2xl border-2 border-dashed border-slate-200 p-12 flex flex-col items-center justify-center text-center hover:border-red-800 transition-colors cursor-pointer group relative">
-                <div className="bg-red-50 p-6 rounded-full mb-4 group-hover:bg-red-100 transition-colors">
-                  <Upload className="text-red-800 w-10 h-10" />
-                </div>
-                <h3 className="text-lg font-bold">Drag & Drop your PDF or Image</h3>
-                <p className="text-sm text-slate-500 mt-2">Maximum file size: 25MB</p>
-                <button className="mt-6 bg-red-800 text-white px-6 py-2 rounded-full font-bold hover:bg-red-900 transition-all shadow-lg shadow-red-900/20">
-                  Browse Files
-                </button>
-              </div>
+            {/* LEFT SIDE: UPLOAD ZONE & SETTINGS */}
+            <div className="flex flex-col">
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col md:flex-row h-full">
+                
+                {/* --- LEFT SUB-SIDE: UPLOAD ZONE --- */}
+                <div className="flex-1 p-8 border-r border-slate-100">
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-6">Upload Zone</h3>
+                  
+                  <div className="space-y-6">
+                    <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-12 flex flex-col items-center justify-center text-center group hover:border-red-800 transition-all cursor-pointer">
+                      <div className="bg-white p-4 rounded-full shadow-sm mb-4 group-hover:scale-110 transition-transform">
+                        <Upload className="text-slate-400 w-12 h-12" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-700">
+                        Drag & Drop your PDF or Image here
+                      </h3>
+                      <p className="text-slate-500 font-bold text-sm">
+                        or <span className="text-red-800 underline">Browse Files</span>
+                      </p>
+                      <p className="text-[10px] text-slate-400 mt-4 uppercase font-bold tracking-widest">
+                        Supported: PDF, JPG, PNG (Max 25MB)
+                      </p>
+                    </div>
 
-              {/* Sample Uploaded File Card */}
-              <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 shadow-sm">
-                <div className="bg-red-100 p-3 rounded-lg text-red-800"><FileText size={24} /></div>
-                <div className="flex-1">
-                  <p className="text-sm font-bold truncate">Thesis_Draft_V1.pdf</p>
-                  <p className="text-xs text-slate-500">1.2 MB • Upload Complete</p>
+                    {/* SAMPLE UPLOADED FILE */}
+                    <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 shadow-sm">
+                      <div className="bg-red-800 p-2 rounded text-white shadow-md">
+                        <FileText size={20} />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex justify-between items-center mb-1">
+                          <p className="text-xs font-bold text-slate-800">Thesis_Draft_V1.pdf</p>
+                          <button className="text-slate-400 hover:text-red-800"><X size={14}/></button>
+                        </div>
+                        <p className="text-[10px] text-slate-400 font-bold mb-2">1.2 MB</p>
+                        <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-slate-700 h-full w-[85%] rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <button className="text-slate-400 hover:text-red-800"><X size={20} /></button>
+
+                {/* --- RIGHT SUB-SIDE: ACTIVE SETTINGS --- */}
+                <div className="w-full md:w-80 bg-slate-50/50 p-8 flex flex-col">
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-6">Active Settings</h3>
+                  
+                  <div className="space-y-5 flex-1">
+                    <SettingField label="Paper Size">
+                      <select className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm font-bold shadow-sm outline-none">
+                        <option>A4</option>
+                        <option>Letter</option>
+                        <option>Legal</option>
+                      </select>
+                    </SettingField>
+
+                    <SettingField label="Color Mode">
+                      <select className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm font-bold shadow-sm outline-none">
+                        <option>Black & White</option>
+                        <option>Colored</option>
+                      </select>
+                    </SettingField>
+
+                    <SettingField label="Print Quality">
+                      <select className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm font-bold shadow-sm outline-none">
+                        <option>Standard</option>
+                        <option>High Definition</option>
+                      </select>
+                    </SettingField>
+
+                    <SettingField label="Copies">
+                      <select className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm font-bold shadow-sm outline-none">
+                        {[1, 2, 3, 4, 5].map(n => <option key={n}>{n}</option>)}
+                      </select>
+                    </SettingField>
+
+                    <div className="pt-6 border-t border-slate-200 mt-6">
+                      <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Price Summary</h4>
+                      <div className="flex justify-between items-end mb-2">
+                        <span className="text-sm font-bold text-slate-600">Total:</span>
+                        <span className="text-xl font-black text-slate-900 leading-none">₱{totalPrice.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-bold text-slate-600">Status:</span>
+                        <span className="text-xs font-bold text-green-600">[Ready to Print]</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button className="w-full bg-red-900 text-white font-black py-4 rounded-xl mt-8 hover:bg-red-950 transition-all uppercase tracking-widest text-xs shadow-lg shadow-red-900/20">
+                    Submit Print Order
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* RIGHT: SETTINGS PANEL */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex flex-col">
+            {/* RIGHT SIDE: LIVE STATUS TRACKER */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 h-full">
               <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-                Active Settings <span className="h-1 w-1 bg-slate-300 rounded-full"></span>
-                <span className="text-xs font-normal text-slate-500 uppercase tracking-widest">WMSU Campus B</span>
+                <Activity className="text-red-800 mr-2" size={20} /> Live Status Tracker
               </h3>
-
-              <div className="space-y-6 flex-1">
-                <SettingGroup label="Paper Size">
-                  <select 
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 outline-none focus:ring-2 focus:ring-red-800/20"
-                    value={paperSize}
-                    onChange={(e) => setPaperSize(e.target.value)}
-                  >
-                    <option>A4 (Standard)</option>
-                    <option>Letter (Short)</option>
-                    <option>Legal (Long)</option>
-                  </select>
-                </SettingGroup>
-
-                <SettingGroup label="Color Mode">
-                  <div className="grid grid-cols-2 gap-4">
-                    <SelectTab active={colorMode === 'B&W'} onClick={() => setColorMode('B&W')} label="Black & White" />
-                    <SelectTab active={colorMode === 'Colored'} onClick={() => setColorMode('Colored')} label="Colored" />
+              
+              <div className="space-y-6">
+                <div className="bg-green-50 rounded-xl p-6 border border-green-100">
+                  <h4 className="text-sm font-bold text-green-800 mb-2">System Status</h4>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-semibold text-green-700">All Systems Operational</span>
                   </div>
-                </SettingGroup>
-
-                <SettingGroup label="Copies">
-                  <div className="flex items-center gap-4">
-                    <button onClick={() => setCopies(Math.max(1, copies - 1))} className="w-10 h-10 rounded-lg border border-slate-200 flex items-center justify-center font-bold hover:bg-slate-50">-</button>
-                    <span className="text-lg font-bold w-8 text-center">{copies}</span>
-                    <button onClick={() => setCopies(copies + 1)} className="w-10 h-10 rounded-lg border border-slate-200 flex items-center justify-center font-bold hover:bg-slate-50">+</button>
+                </div>
+                
+                <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                  <h4 className="text-sm font-bold text-blue-800 mb-2">Current Queue</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100">
+                      <span className="text-sm font-medium truncate mr-2">Thesis_Draft_V1.pdf</span>
+                      <span className="text-[10px] text-green-600 font-bold whitespace-nowrap">PRINTING...</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100">
+                      <span className="text-sm font-medium truncate mr-2">Assignment_Ch1.pdf</span>
+                      <span className="text-[10px] text-blue-600 font-bold whitespace-nowrap">IN QUEUE</span>
+                    </div>
                   </div>
-                </SettingGroup>
-
-                {/* Price Summary */}
-                <div className="bg-slate-50 rounded-xl p-6 border border-slate-100">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-slate-500 font-medium">Estimated Price:</span>
-                    <span className="text-2xl font-black text-slate-900">₱{totalPrice.toFixed(2)}</span>
+                </div>
+                
+                <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-100">
+                  <h4 className="text-sm font-bold text-yellow-800 mb-2">Recent Activity</h4>
+                  <div className="space-y-3">
+                    <div className="flex flex-col p-3 bg-white rounded-lg border border-slate-100">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium truncate mr-2">Syllabus_IT3.pdf</span>
+                        <span className="text-[10px] text-green-600 font-bold">COMPLETED</span>
+                      </div>
+                      <span className="text-[10px] text-slate-500 mt-1">2:30 PM • 2 copies</span>
+                    </div>
                   </div>
-                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider flex items-center gap-1">
-                    <CheckCircle size={10} className="text-green-500" /> Ready for secure processing
-                  </p>
                 </div>
               </div>
-
-              <button className="w-full bg-red-800 text-white font-bold py-4 rounded-xl mt-8 hover:bg-red-900 transition-all shadow-xl shadow-red-900/30 flex items-center justify-center gap-2">
-                SUBMIT PRINT ORDER
-              </button>
             </div>
-
-          </div>
+          </div> 
         </div>
       </main>
     </div>
   );
 };
 
-
-const SettingGroup = ({ label, children }) => (
-  <div className="mb-6">
-    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">{label}</label>
+const SettingField = ({ label, children }) => (
+  <div>
+    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">{label}</label>
     {children}
   </div>
 );

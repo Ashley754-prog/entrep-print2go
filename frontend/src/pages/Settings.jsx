@@ -9,17 +9,30 @@ import {
   Save
 } from 'lucide-react';
 
+// --- BACKGROUND DECORATION COMPONENTS ---
+const Watermark = () => (
+  <div className="fixed bottom-[-50px] left-[-50px] opacity-[0.1] pointer-events-none z-0">
+    <img 
+      src="/wmsu-img.jpg" 
+      alt="WMSU Seal"
+      className="w-full h-full opacity-80"
+    />
+  </div>
+);
+
 const Settings = () => {
   const [emailNotif, setEmailNotif] = useState(true);
   const [webNotif, setWebNotif] = useState(true);
 
   return (
     <div className="flex h-screen bg-slate-100 font-sans text-slate-800">
+      <Watermark />
+
       {/* SIDEBAR */}
       <Sidebar />
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden relative">
         <Topbar />
 
         <div className="flex-1 overflow-y-auto p-8 flex justify-center">

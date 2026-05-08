@@ -1,9 +1,17 @@
-import React from 'react';
-import { Search, Bell, Printer, } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Bell, Printer, ChevronDown, LogOut, User, FileText, LayoutDashboard } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Topbar = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    // Add logout logic here
+    window.location.href = '/signin';
+  };
+
   return (
-    <header className="bg-white h-[72px] border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-10">
+    <header className="bg-white h-[72px] border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-50">
       {/* --- SEARCH BAR --- */}
       <div className="relative w-[500px]">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -33,20 +41,72 @@ const Topbar = () => {
         </button>
 
         {/* User Profile Section */}
-        <div className="flex items-center gap-3 pl-6 border-l border-slate-100">
-          <div className="text-right hidden sm:block">
-            <p className="text-sm font-bold text-slate-900 leading-none mb-1">
-              Russell
-            </p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              Student
-            </p>
-          </div>
-          
-          {/* Avatar Icon */}
-          <div className="w-10 h-10 rounded-full bg-red-900 flex items-center justify-center text-white font-bold shadow-md shadow-red-900/20 border-2 border-white">
-            R
-          </div>
+        <div className="relative">
+          <button 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-3 pl-6 border-l border-slate-100 hover:bg-slate-50 transition-all"
+          >
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-bold text-slate-900 leading-none mb-1">
+                Russell
+              </p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                Student
+              </p>
+            </div>
+            
+            {/* Avatar Icon - Now clickable to open dropdown */}
+            <div 
+              className="w-10 h-10 rounded-full bg-red-900 flex items-center justify-center text-white font-bold shadow-md shadow-red-900/20 border-2 border-white cursor-pointer"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              R
+            </div>
+          </button>
+
+          {/* Dropdown Menu */}
+          {isDropdownOpen && (
+            <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg z-50">
+              <div className="py-2">
+                <Link 
+                  to="/dashboard" 
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-red-800 transition-all"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  <LayoutDashboard size={16} />
+                  <span>Dashboard</span>
+                </Link>
+                
+                <Link 
+                  to="/new-print-job" 
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-red-800 transition-all"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  <FileText size={16} />
+                  <span>New Print Job</span>
+                </Link>
+                
+                <Link 
+                  to="/signin" 
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-red-800 transition-all"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  <User size={16} />
+                  <span>My Profile</span>
+                </Link>
+
+                <hr className="border-slate-300" />
+                
+                <button 
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-all text-left"
+                >
+                  <LogOut size={16} />
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>

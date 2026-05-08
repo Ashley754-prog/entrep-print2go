@@ -2,11 +2,21 @@ import React from 'react';
 import Sidebar from '../components/Sidebar.jsx';
 import Topbar from '../components/Topbar.jsx';
 import { 
-  Download, 
   FileText, 
   RefreshCcw,
-  Filter
+  Search
 } from 'lucide-react';
+
+// --- BACKGROUND DECORATION COMPONENTS ---
+const Watermark = () => (
+  <div className="fixed bottom-[-50px] left-[-50px] opacity-[0.1] pointer-events-none z-0">
+    <img 
+      src="/wmsu-img.jpg" 
+      alt="WMSU Seal"
+      className="w-full h-full opacity-80"
+    />
+  </div>
+);
 
 const History = () => {
   // Sample Data for your Table
@@ -20,17 +30,44 @@ const History = () => {
 
   return (
     <div className="flex h-screen bg-slate-100 font-sans text-slate-800">
+      <Watermark />
+
       {/* SIDEBAR */}
       <Sidebar />
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden relative">
         <Topbar />
 
         <div className="flex-1 overflow-y-auto p-8">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-slate-100">
-               <h2 className="text-xl font-bold">Print History</h2>
+               <div className="flex justify-between items-center mb-4">
+                 <h2 className="text-xl text-slate-900 font-bold">Print History</h2>
+                 <button className="bg-green-800 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-green-900 transition-colors">
+                   Export CSV
+                 </button>
+               </div>
+               
+               <div className="flex gap-4 mb-4">
+                 <div className="flex-1">
+                   <div className="relative">
+                     <input 
+                       type="text" 
+                       placeholder="Search by filename..."
+                       className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800/20 bg-slate-50"
+                     />
+                     <Search className="absolute left-3 top-2.5 text-slate-100" size={18} />
+                   </div>
+                 </div>
+                 <div className="flex-1">
+                   <input 
+                     type="date" 
+                     placeholder="Filter by date..."
+                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800/20 bg-slate-50"
+                   />
+                 </div>
+               </div>
             </div>
             
             <table className="w-full text-left">

@@ -11,42 +11,12 @@ import {
 
 // --- BACKGROUND DECORATION COMPONENTS ---
 const Watermark = () => (
-  <div className="fixed bottom-[-50px] left-[-50px] opacity-[0.1] pointer-events-none z-[1]">
-    <svg width="600" height="600" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="250" cy="250" r="240" stroke="currentColor" strokeWidth="10" className="text-red-900"/>
-      <path d="M250 50 L100 400 L400 400 Z" stroke="currentColor" strokeWidth="8" className="text-red-900"/>
-    </svg>
-  </div>
-);
-
-const GeometricPattern = () => (
-  <div className="absolute top-20 right-10 opacity-[0.4] pointer-events-none z-[3]">
-    <svg width="200" height="200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="10" y="10" width="20" height="20" fill="#991b1b" opacity="0.6" />
-      <rect x="40" y="10" width="20" height="20" fill="#dc2626" opacity="0.4" />
-      <rect x="70" y="10" width="20" height="20" fill="#991b1b" opacity="0.6" />
-      <rect x="10" y="40" width="20" height="20" fill="#dc2626" opacity="0.4" />
-      <rect x="40" y="40" width="20" height="20" fill="#991b1b" opacity="0.6" />
-      <rect x="70" y="40" width="20" height="20" fill="#dc2626" opacity="0.4" />
-      <rect x="10" y="70" width="20" height="20" fill="#991b1b" opacity="0.6" />
-      <rect x="40" y="70" width="20" height="20" fill="#dc2626" opacity="0.4" />
-      <rect x="70" y="70" width="20" height="20" fill="#991b1b" opacity="0.6" />
-    </svg>
-  </div>
-);
-
-const GridPattern = () => (
-  <div className="absolute bottom-10 right-10 opacity-[0.3] pointer-events-none z-[4]">
-    <svg width="300" height="300" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="0" y1="0" x2="100" y2="0" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="0" y1="25" x2="100" y2="25" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="0" y1="50" x2="100" y2="50" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="0" y1="75" x2="100" y2="75" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="0" y1="100" x2="100" y2="100" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="25" y1="0" x2="25" y2="100" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="50" y1="0" x2="50" y2="100" stroke="#991b1b" strokeWidth="0.5" />
-      <line x1="75" y1="0" x2="75" y2="100" stroke="#991b1b" strokeWidth="0.5" />
-    </svg>
+  <div className="fixed bottom-[-50px] left-[-50px] opacity-[0.1] pointer-events-none z-0">
+    <img 
+      src="/wmsu-img.jpg" 
+      alt="WMSU Seal"
+      className="w-full h-full opacity-80"
+    />
   </div>
 );
 
@@ -54,8 +24,6 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen bg-slate-100 font-sans text-slate-800">
       <Watermark />
-      <GeometricPattern /> 
-      <GridPattern /> 
 
       {/* --- SIDEBAR --- */}
       <Sidebar />
